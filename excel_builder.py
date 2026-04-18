@@ -145,7 +145,7 @@ class ReportBuilder:
             ws.write(r,3,row['Total SKUs'],      self._cf(bg,{'num_format':'#,##0'}))
             ws.write(r,4,row['With Stock'],      self._cf(bg,{'num_format':'#,##0'}))
             ws.write(r,5,row['Units in Stock'],  self._cf(bg,{'num_format':'#,##0'}))
-            ws.write(r,6,row['Capital Tied (NGN)'],self._cf(bg,{'num_format':'#,##0'}))
+            ws.write(r,6,row.get('Capital Tied (NGN)', row.get('Capital Tied (N)', 0)),
             avg=row['Avg Days Idle']
             ws.write(r,7,round(float(avg),1) if (avg and not pd.isna(avg)) else 0,self._cf(bg,{'num_format':'0.0'}))
             ws.write(r,8,rl,self._cf(risk_bgs.get(rl,'#F2F2F2'),{'bold':True,'font_color':risk_tcs.get(rl,'#1F1F1F')}))
