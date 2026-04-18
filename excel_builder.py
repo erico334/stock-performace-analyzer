@@ -134,7 +134,7 @@ class ReportBuilder:
         ws.merge_range(6,1,6,8,'STOCK HEALTH BY AGE BUCKET',self.f['hdr_blue'])
         ws.set_row(6,22)
         self._write_headers(ws,['Age Bucket','Category','Total SKUs','With Stock',
-            'Units in Stock','Capital Tied (N)','Avg Days Idle','Risk Level','Recommended Action'],7)
+            'Units in Stock','Capital Tied','Avg Days Idle','Risk Level','Recommended Action'],7)
         bucket_df = az.get_bucket_summary(self.df)
         risk_bgs = {'Low':'#E2EFDA','Medium':'#FFF2CC','High':'#FCE4D6','Critical':'#F4CCCC'}
         risk_tcs = {'Low':'#375623','Medium':'#7D5A00','High':'#843C0C','Critical':'#7F0000'}
@@ -170,11 +170,11 @@ class ReportBuilder:
             ('Total SKUs',        len(src_df)),
             ('With Stock',        len(ws_df)),
             ('Units in Stock',    int(ws_df['QTY AT HAND'].sum())),
-            ('Capital Tied (N)',  int(ws_df['CAPITAL_TIED'].sum())),
+            ('Capital Tied',  int(ws_df['CAPITAL_TIED'].sum())),
             ('Avg Days Since Sale',round(avg_d,1)),
         ],start_row=3)
         self._write_headers(ws,['#','Item Name','Last Sale Date','Days Idle','Qty Sold',
-            'Qty At Hand','Unit Cost (N)','Capital Tied (N)','Barcode','Status / Flag'],6)
+            'Qty At Hand','Unit Cost (N)','Capital Tied','Barcode','Status / Flag'],6)
         sdf=src_df.copy()
         sdf['_s']=sdf['DAYS_SINCE_SALE'].fillna(99999)
         sdf=sdf.sort_values(['_s','CAPITAL_TIED'],ascending=[False,False]).reset_index(drop=True)
@@ -256,11 +256,11 @@ class ReportBuilder:
         self._write_metric_cards(ws,[
             ('Dead SKUs',       len(ws_df)),
             ('Total Units',     int(ws_df['QTY AT HAND'].sum())),
-            ('Capital Tied (N)',int(ws_df['CAPITAL_TIED'].sum())),
+            ('Capital Tied',int(ws_df['CAPITAL_TIED'].sum())),
             ('Avg Unit Cost',   int(ws_df['UNIT_COST'].mean()) if len(ws_df)>0 else 0),
         ],start_row=3)
         self._write_headers(ws,['#','Item Name','Qty At Hand','Unit Cost (N)',
-            'Capital Tied (N)','Barcode','Recommendation'],6,fmt_key='hdr_gray')
+            'Capital Tied','Barcode','Recommendation'],6,fmt_key='hdr_gray')
         for ri,row in dead.iterrows():
             r=ri+7; cap=row['CAPITAL_TIED']
             bg='#FFE0B2' if cap>50000 else ('#FFF9E6' if cap>10000 else ('#F2F2F2' if ri%2==0 else WHITE))
