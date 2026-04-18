@@ -180,7 +180,7 @@ def get_bucket_summary(df):
             "Total SKUs":       len(sub),
             "With Stock":       len(ws),
             "Units in Stock":   int(ws["QTY AT HAND"].sum()),
-            "Capital Tied (N)": ws["CAPITAL TIED"].sum(),
+           "CapitalTied": ws["CAPITAL_TIED"].sum(),
             "Avg Days Idle":    round(sub["DAYS_SINCE_SALE"].mean(), 1) if len(sub) else 0,
             "Risk Level":       "Low" if cat=="Active" else "Medium" if cat=="Slow" else "High" if cat=="Dormant" else "Critical",
             "Action":           action,
