@@ -162,9 +162,9 @@ for col, (label, val, cls, sub) in zip(cols, kpis):
 # ── Bucket table ──────────────────────────────────────────────────────────────
 st.markdown('<div class="section-title">Stock Health by Age Bucket</div>', unsafe_allow_html=True)
 bucket_df   = analyzer.get_bucket_summary(df)
-display_cols= ["Age Bucket","Category","Total SKUs","With Stock","Units in Stock","Capital Tied","Avg Days Idle","Risk Level","Action"]
+display_cols = ["Age Bucket","Category","Total SKUs","With Stock","Units in Stock","CapitalTied","Avg Days Idle","Risk Level","Action"]
 disp        = bucket_df[display_cols].copy()
-disp["Capital Tied"] = disp["Capital Tied"].apply(lambda x: f"N{x:,.0f}" if pd.notna(x) else "---")
+disp["CapitalTied"] = disp["CapitalTied"].apply(lambda x: f"N{x:,.0f}" if pd.notna(x) else "---")
 disp["Avg Days Idle"]    = disp["Avg Days Idle"].apply(lambda x: f"{x:.1f}" if pd.notna(x) and x else "---")
 disp["Units in Stock"]   = disp["Units in Stock"].apply(lambda x: f"{x:,}")
 disp["Total SKUs"]       = disp["Total SKUs"].apply(lambda x: f"{x:,}")
